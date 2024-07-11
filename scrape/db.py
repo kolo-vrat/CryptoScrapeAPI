@@ -36,7 +36,7 @@ class Crypto(Base):
 
 class CryptoPrice(Base):
     __tablename__ = "crypto_prices"
-    timestamp: Mapped[datetime.datetime] = mapped_column(DateTime(), primary_key=True)
+    time: Mapped[datetime.datetime] = mapped_column(DateTime(), primary_key=True)
     crypto_id = mapped_column(ForeignKey("crypto.id"), primary_key=True)
     price: Mapped[float]
 
@@ -132,7 +132,7 @@ class DBInterface:
 
         if crypto_id is not None:
             stmt = insert(CryptoPrice).values(
-                timestamp=func.now(),
+                time=func.now(),
                 crypto_id=crypto_id,
                 price=price,
             )
@@ -150,7 +150,7 @@ class DBInterface:
                         select(Crypto).where(Crypto.ticker == ticker)
                     ).one()
                     stmt = insert(CryptoPrice).values(
-                        timestamp=func.now(),
+                        time=func.now(),
                         crypto_id=crypto.id,
                         price=price,
                     )

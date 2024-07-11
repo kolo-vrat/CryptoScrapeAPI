@@ -5,6 +5,9 @@ db = SQLAlchemy()
 
 
 def create_app(*args, **kwargs):
+    """
+    Create the Flask application and initialize it with settings from the specified environment
+    """
     env = kwargs["env"]
     app = Flask(__name__)
     app.config.from_object(f"conf.{env}")
