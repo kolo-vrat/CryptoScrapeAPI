@@ -152,8 +152,12 @@ async def main():
     links = scrape_links(response)
 
     semaphore = asyncio.Semaphore(3)
-    for link in links[:3]:
-        await scrape_data(link, headers, semaphore)
+    tasks = []
+    for link in links[:20]:
+        task = asyncio.create_task(scrape_data(link, headers, semaphore))
+        tasks.append(task)
+
+    await asyncio.gather(*tasks)
 
 
 if __name__ == "__main__":
